@@ -1,1 +1,225 @@
+class Node:
+	def __init__(self,data):
+		self.data=data
+		self.next=None
+		self.prev=None
 
+class CircularDoublyLinkedList:
+	def __init__(self):
+		self.head=None
+	
+	#1. Display Node
+	def displayNode(self):
+		if(self.head==None):
+			print(" The Linked List is Empty! ") 
+
+		else:	
+			temp=self.head
+			print(" ==> ",end="")
+			while(temp.next!=self.head):
+				print(temp.data,end=" <====> ")
+				temp=temp.next
+			print(temp.data," <== \n")
+	
+	#2. Insert At Beginning
+	def insertAtBeginning(self):
+		val=int(input("Enter the value of data: "))
+		n=Node(val)
+		
+		if(self.head==None):
+			self.head=n
+			n.next=self.head
+			n.prev=self.head
+			
+		else:
+			temp=self.head
+			while(temp.next!=self.head):
+				temp=temp.next
+			n.next=self.head
+			self.head.prev=n
+
+			temp.next=n
+			self.head=n
+			n.prev=temp
+
+	#3. InsertAtMiddle
+	def insertAtMiddle(self):
+		x=int(input("Enter the data of node: "))
+		n=Node(x)
+		
+		if(self.head==None):
+			self.head=n
+			n.next=self.head
+			n.prev=self.head
+			
+		else:
+			key=int(input("Enter the value of key to insert the node before the key: "))
+			temp=self.head
+			count=0
+			
+			if(key==self.head.data):
+				temp=self.head
+				while(temp.next!=self.head):
+					temp=temp.next
+				n.next=self.head
+				self.head.prev=n
+	
+				temp.next=n
+				self.head=n
+				n.prev=temp			
+	
+			else:
+				while(temp.next!=self.head):
+					previs=temp
+					temp=temp.next
+					if(key==temp.data):
+						count=1
+						break
+		
+				if count==1:
+					n.next=temp
+					temp.prev=n
+					
+					previs.next=n
+					n.prev=previs
+									
+				else:
+					print(f"The element {key} not found in Linked List!")
+	
+	#4. InsertAtEnd
+	def insertAtEnd(self):
+		val=int(input("Enter the value of data: "))
+		n=Node(val)
+		
+		if(self.head==None):
+			self.head=n
+			n.next=self.head
+			n.prev=self.head
+			
+		else:
+			temp=self.head
+			while(temp.next!=self.head):
+				temp=temp.next
+					
+			n.next=self.head
+			self.head.prev=n
+			
+			temp.next=n
+			n.prev=temp
+
+	#5. Delete At Beginning
+	def deleteAtBeginning(self):
+		if (self.head==None):
+			print(" The Linked List is Empty! ") 
+
+		elif(self.head.next==self.head):	
+			self.head=None
+			
+		else:
+			temp=self.head
+			while(temp.next!=self.head):
+				temp=temp.next
+				
+			self.head=self.head.next
+			
+			temp.next=self.head		
+			self.head.prev=temp
+			
+	#6. Delete At Middle
+	def deleteAtMiddle(self):
+		if (self.head==None):
+			print(" The Linked List is Empty! ") 
+
+		else:
+			key=int(input("Enter the value of key to be deleted: "))
+			temp=self.head
+			count=0
+			previs=temp
+			
+			if ((key==self.head.data) and (self.head.next==self.head)):
+				self.head=None
+			
+			elif(key==self.head.data):				
+				while(temp.next!=self.head):
+					previs=temp
+					temp=temp.next
+						
+				temp.next=self.head.next
+				self.head=self.head.next
+				self.head.prev=temp
+					
+			else:
+				while(temp.next!=self.head):
+					previs=temp
+					temp=temp.next
+					if(key==temp.data):
+						count=1
+						break
+				
+				if count==1:
+					previs.next=temp.next
+					temp.prev=previs
+				else:
+					print(f"The element {key} not found in Linked List")
+	
+	#7. Delete At End
+	def deleteAtEnd(self):
+		if (self.head==None):
+			print(" The Linked List is Empty! ") 
+		elif (self.head.next==self.head):
+			self.head=None
+		else:
+			temp=self.head
+			while(temp.next!=self.head):
+				previs=temp
+				temp=temp.next
+				
+			previs.next=self.head
+			self.head.prev=previs
+
+	#8. DeleteAll
+	def deleteAll(self):
+		if (self.head==None):
+			print(" The Linked List is Empty! ") 
+		else:
+			self.head=None
+
+Ls=CircularDoublyLinkedList()
+
+while(True):
+	print(f"""\n{"*"*60}\n
+Circular Doubly Linked List Operations:\n
+1. Enter 1 to Display 
+2. Enter 2 to Insert at Beginning 
+3. Enter 3 to Insert at Middle 
+4. Enter 4 to Insert at End 
+5. Enter 5 to Delete at Beginning 
+6. Enter 6 to Delete at Middle 
+7. Enter 7 to Delete at End 
+8. Enter 8 to Delete all 
+0. Enter 0 to Exit 
+	""")
+	
+	choice=input("Enter the choice: ")
+	
+	if(choice=="1"):
+		Ls.displayNode()
+	elif(choice=="2"):
+		Ls.insertAtBeginning()
+	elif(choice=="3"):
+		Ls.insertAtMiddle()
+	elif(choice=="4"):
+		Ls.insertAtEnd()
+	elif(choice=="5"):
+		Ls.deleteAtBeginning()
+	elif(choice=="6"):
+		Ls.deleteAtMiddle()
+	elif(choice=="7"):
+		Ls.deleteAtEnd()
+	elif(choice=="8"):
+		Ls.deleteAll()
+	elif(choice=="0"):
+		print(f"""\n{"*" *20} 🌺 Thank You 💐  {"*" *20}""")
+		break
+	else:
+		print("❌ Invalid choice! ❌")
